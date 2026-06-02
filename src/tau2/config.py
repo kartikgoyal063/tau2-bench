@@ -15,20 +15,25 @@ DEFAULT_LOG_LEVEL = "ERROR"
 DEFAULT_AGENT_IMPLEMENTATION = "llm_agent"
 DEFAULT_USER_IMPLEMENTATION = "user_simulator"
 DEFAULT_LLM_AGENT = "gpt-4.1-2025-04-14"
-DEFAULT_LLM_USER = "gpt-4.1-2025-04-14"
+# Gemini-harness override: user simulator (was gpt-5.2/gpt-4.1) -> Gemini 3.1 Pro. Override per-run with --user-llm.
+DEFAULT_LLM_USER = "gemini/gemini-3.1-pro-preview"
 DEFAULT_LLM_TEMPERATURE_AGENT = 0.0
 DEFAULT_LLM_TEMPERATURE_USER = 0.0
 DEFAULT_LLM_ARGS_AGENT = {"temperature": DEFAULT_LLM_TEMPERATURE_AGENT}
 DEFAULT_LLM_ARGS_USER = {"temperature": DEFAULT_LLM_TEMPERATURE_USER}
 
-DEFAULT_LLM_NL_ASSERTIONS = "gpt-4.1-2025-04-14"
+# Gemini-harness override: NL-assertion scorer was gpt-4.1; swapped to Gemini 3.1 Flash Lite (AI Studio route).
+DEFAULT_LLM_NL_ASSERTIONS = "gemini/gemini-3.1-flash-lite"
 DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE = 0.0
 DEFAULT_LLM_NL_ASSERTIONS_ARGS = {"temperature": DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE}
 
-DEFAULT_LLM_ENV_INTERFACE = "gpt-4.1-2025-04-14"
+# Gemini-harness override: env-interface agent was gpt-4.1; swapped to Gemini 3.1 Flash Lite (AI Studio route).
+DEFAULT_LLM_ENV_INTERFACE = "gemini/gemini-3.1-flash-lite"
 DEFAULT_LLM_ENV_INTERFACE_TEMPERATURE = 0.0
 DEFAULT_LLM_ENV_INTERFACE_ARGS = {"temperature": DEFAULT_LLM_ENV_INTERFACE_TEMPERATURE}
 
+# Review/judge (auth, hallucination, severity): Opus 4.5 via the native Anthropic API (ANTHROPIC_API_KEY).
+# Only invoked under `--auto-review` or `tau2 review`; a plain `tau2 run` never calls it.
 DEFAULT_LLM_EVAL_USER_SIMULATOR = "claude-opus-4-5"
 
 # LLM debug logging
