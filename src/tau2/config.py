@@ -22,13 +22,13 @@ DEFAULT_LLM_TEMPERATURE_USER = 0.0
 DEFAULT_LLM_ARGS_AGENT = {"temperature": DEFAULT_LLM_TEMPERATURE_AGENT}
 DEFAULT_LLM_ARGS_USER = {"temperature": DEFAULT_LLM_TEMPERATURE_USER}
 
-# Gemini-harness override: NL-assertion scorer was gpt-4.1; swapped to Gemini 3.1 Flash Lite (AI Studio route).
-DEFAULT_LLM_NL_ASSERTIONS = "gemini/gemini-3.1-flash-lite"
+# Gemini-harness override: NL-assertion scorer was gpt-4.1; swapped to Gemini 3 Flash (AI Studio route).
+DEFAULT_LLM_NL_ASSERTIONS = "gemini/gemini-3-flash-preview"
 DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE = 0.0
 DEFAULT_LLM_NL_ASSERTIONS_ARGS = {"temperature": DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE}
 
-# Gemini-harness override: env-interface agent was gpt-4.1; swapped to Gemini 3.1 Flash Lite (AI Studio route).
-DEFAULT_LLM_ENV_INTERFACE = "gemini/gemini-3.1-flash-lite"
+# Gemini-harness override: env-interface agent was gpt-4.1; swapped to Gemini 3 Flash (AI Studio route).
+DEFAULT_LLM_ENV_INTERFACE = "gemini/gemini-3-flash-preview"
 DEFAULT_LLM_ENV_INTERFACE_TEMPERATURE = 0.0
 DEFAULT_LLM_ENV_INTERFACE_ARGS = {"temperature": DEFAULT_LLM_ENV_INTERFACE_TEMPERATURE}
 
