@@ -1,4 +1,7 @@
 import json
+import re
+
+from loguru import logger
 
 from tau2.agent.base.streaming import (
     LinearizationStrategy,
@@ -124,7 +127,27 @@ class NLAssertionsEvaluator(EvaluatorBase[Message]):
             call_name="nl_assertions_eval",
             **DEFAULT_LLM_NL_ASSERTIONS_ARGS,
         )
-        result_data = json.loads(assistant_message.content)
+        # gemini-3-flash-preview (and other judge models) intermittently wrap the JSON answer in
+        # ```json ... ``` fences; a bare json.loads then dies at char 0 ("Expecting value: line 1
+        # column 1"). Strip fences, and if the response is still unparseable, fail the assertions
+        # conservatively (met=False) rather than crash the whole training run.
+        content = (assistant_message.content or "").strip()
+        if content.startswith("```"):
+            content = re.sub(r"^```(?:json)?\s*", "", content)
+            content = re.sub(r"\s*```$", "", content)
+        try:
+            result_data = json.loads(content)
+        except json.JSONDecodeError:
+            logger.warning(
+                f"NL-assertion judge returned non-JSON (len={len(content)}): {content[:200]!r}; "
+                "marking all assertions unmet"
+            )
+            return [
+                NLAssertionCheck(
+                    nl_assertion=a, met=False, justification="judge returned non-JSON output"
+                )
+                for a in nl_assertions
+            ]
         return [
             NLAssertionCheck(
                 nl_assertion=result["expectedOutcome"],
